@@ -9,14 +9,14 @@
   --paper:#F5F7FA;          /* główne tło */
   --paper-2:#E6ECF3;        /* sekcje alternatywne (chłodny jasny szary) */
   --paper-3:#E6ECF3;        /* delikatne wypełnienia */
-  --ink:#152232;            /* tekst główny — chłodny grafit */
-  --ink-soft:#22344A;       /* nagłówki drugorzędne */
-  --muted:#62707F;          /* tekst poboczny */
-  --line:rgba(21,34,50,.12);/* hairline */
-  --accent:#1863DC;         /* stonowany petrol-slate — jedyny akcent */
-  --accent-d:#066AAB;
-  --accent-soft:rgba(24,99,220,.10);
-  --dark:#152232;           /* sekcje ciemne (stopka/CTA) */
+  --ink:#1C1F26;            /* tekst główny — neutralny grafit */
+  --ink-soft:#2B313B;       /* nagłówki drugorzędne */
+  --muted:#666E78;          /* tekst poboczny */
+  --line:rgba(28,31,38,.12);/* hairline */
+  --accent:#E1251B;         /* czerwień z logo ASPEKT DACHY — jedyny akcent */
+  --accent-d:#B81C14;
+  --accent-soft:rgba(225,37,27,.10);
+  --dark:#1C1F26;           /* sekcje ciemne (stopka/CTA) */
 
   /* ODSTĘPY — skala 4/8 */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px;
