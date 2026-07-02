@@ -9,14 +9,14 @@
   --paper:#F5F7FA;          /* główne tło */
   --paper-2:#E6ECF3;        /* sekcje alternatywne (chłodny jasny szary) */
   --paper-3:#E6ECF3;        /* delikatne wypełnienia */
-  --ink:#1C1F26;            /* tekst główny — neutralny grafit */
-  --ink-soft:#2B313B;       /* nagłówki drugorzędne */
-  --muted:#666E78;          /* tekst poboczny */
-  --line:rgba(28,31,38,.12);/* hairline */
-  --accent:#E1251B;         /* czerwień z logo ASPEKT DACHY — jedyny akcent */
+  --ink:#152232;            /* tekst główny — chłodny grafit */
+  --ink-soft:#22344A;       /* nagłówki drugorzędne */
+  --muted:#62707F;          /* tekst poboczny */
+  --line:rgba(21,34,50,.12);/* hairline */
+  --accent:#E1251B;         /* stonowany petrol-slate — jedyny akcent */
   --accent-d:#B81C14;
   --accent-soft:rgba(225,37,27,.10);
-  --dark:#1C1F26;           /* sekcje ciemne (stopka/CTA) */
+  --dark:#152232;           /* sekcje ciemne (stopka/CTA) */
 
   /* ODSTĘPY — skala 4/8 */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px;
@@ -224,6 +224,13 @@ p{max-width:65ch}
 
 /* ---------- GALLERY (realizacje) ---------- */
 .gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-4);grid-auto-rows:200px}
+/* GALERIA MASONRY — pionowe zdjęcia (portrety beauty/wellness) bez przycinania: kolumny, height auto */
+.gallery-masonry{column-count:3;column-gap:var(--space-4)}
+@media(max-width:900px){.gallery-masonry{column-count:2}}
+@media(max-width:560px){.gallery-masonry{column-count:1}}
+.gallery-masonry .m-tile{break-inside:avoid;margin:0 0 var(--space-4);padding:0;position:relative;overflow:hidden;border-radius:var(--r-md);border:1px solid var(--line)}
+.gallery-masonry .m-tile img{width:100%;height:auto;display:block}
+.gallery-masonry .m-tile .cap{position:absolute;left:0;right:0;bottom:0;padding:var(--space-4);color:#fff;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent);font-size:var(--text-sm)}
 .tile{position:relative;overflow:hidden;border-radius:var(--r-md);box-shadow:var(--sh-sm);
   transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
 .tile img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
@@ -446,9 +453,6 @@ section{padding-block:clamp(64px,8vw,128px)}
   body{padding-bottom:56px}
 }
 
-/* --- Telefon w nagłówku trochę mocniejszy (CTA „Zadzwoń”) --- */
-.nav-links a.btn-accent .nav-tel{font-variant-numeric:tabular-nums}
-
 /* --- Blok „Awaria? Dzwoń” (opcjonalny, hydraulik/elektryk) --- */
 .awaria{background:var(--dark);color:#fff}
 .awaria .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-5);padding-block:var(--space-7)}
@@ -461,3 +465,171 @@ section{padding-block:clamp(64px,8vw,128px)}
 .auto-marki .marki-list li{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.12em;font-weight:600;
   font-size:clamp(.82rem,1.5vw,1rem);color:var(--ink-soft);padding:.5rem 1rem;border:1px solid var(--line);border-radius:var(--r-sm)}
 .marki-gwar{text-align:center;color:var(--muted);font-size:var(--text-sm);margin-top:var(--space-6)}
+
+/* ============================================================
+   FAZA 3 - OSOBNY UKŁAD FACHOWCY (research wf_e4ed63db + krytyka z policzonym WCAG). Doklejane na wierzch.
+   Tożsamość: ZAUFANIE + DUŻY TELEFON + DOWÓD. Dwublok hero (zdjęcie | lity panel), bezpośrednio, solidnie.
+   ============================================================ */
+
+/* --- P0 KONTRAST: bursztyn jako TEKST na jasnym = 2.0 FAIL (policzone). Naprawy (bursztyn->ciemny tekst / ink). --- */
+.btn-accent{color:#14171c}                                  /* bursztyn + ciemny tekst = 8.28 PASS */
+.sticky-call .sc-call{color:#14171c}                        /* sticky bursztyn + ciemny tekst */
+.obszar-list li.is-home{background:var(--ink);border-color:var(--ink);color:#fff}  /* było bursztyn+biel 2.17 -> ink+biel 16.29 */
+.proces-line .pno{color:var(--ink-soft)}                    /* numery procesu: było bursztyn 2.0 -> ink-soft (czytelne); kropka osi zostaje bursztyn (grafika) */
+
+/* --- Ikona telefonu (uzywana w hero hf-phone-num; nav styluje silnik NAV NOBU) --- */
+.ico-tel{vertical-align:-2px;margin-right:.3em}
+
+/* === HERO FACHOWCY: dwublok (zdjęcie | lity panel ink). Zdjęcie = PIERWSZE dziecko (blur-guard + mobilny stack). STATYCZNE. === */
+.hero-fach{display:grid;grid-template-columns:1fr minmax(0,46%);min-height:clamp(540px,76vh,740px);min-height:clamp(540px,76svh,740px)}
+.hf-photo{width:100%;height:100%;object-fit:cover;display:block;background:var(--paper-2)}  /* img = PIERWSZE dziecko sekcji (blur-guard); EAGER, bez animacji (zero janku) */
+.hf-panel{order:-1;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(2.2rem,5vw,4.5rem) clamp(1.6rem,4vw,3.6rem)}
+.hf-kicker{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.14em;
+  font-size:clamp(.74rem,1.4vw,.9rem);color:var(--accent)}
+.hf-title{color:#fff;font-family:var(--font-display);font-weight:800;line-height:1.05;letter-spacing:-.01em;
+  font-size:clamp(1.9rem,1.4rem+2vw,3rem);margin:var(--space-3) 0 var(--space-5)}
+.hf-phone{display:inline-flex;flex-direction:column;gap:.15rem;margin-bottom:var(--space-5);width:fit-content}
+.hf-phone-lab{font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.66)}
+.hf-phone-num{font-family:var(--font-display);font-weight:800;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;
+  font-size:clamp(2rem,1.4rem+2.2vw,2.9rem);line-height:1;display:inline-flex;align-items:center}
+.hf-phone-num .ico-tel{width:.7em;height:.7em;color:var(--accent);margin-right:.35em}   /* ikona bursztyn, cyfry białe */
+.hf-phone:hover .hf-phone-num{color:var(--accent)}
+.hf-actions{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+.hf-ghost{color:#fff;border-color:rgba(255,255,255,.45)}
+.hf-trust{margin-top:var(--space-5);padding-top:var(--space-4);border-top:1px solid rgba(255,255,255,.16);
+  color:rgba(255,255,255,.82);font-weight:600;font-size:var(--text-sm);letter-spacing:.01em}
+@media(max-width:820px){
+  .hero-fach{grid-template-columns:1fr;min-height:0}
+  .hf-photo{aspect-ratio:16/10}
+  .hf-panel{order:0;padding-block:clamp(2rem,7vw,3rem)}     /* DOM-order: zdjęcie na górze, panel pod */
+}
+
+/* === PROMISE BAR: zawsze-obecna sygnatura usługowa (anty recon-collapse) === */
+.fach-promise{background:var(--paper-2);border-bottom:var(--hairline);padding-block:0}
+.fach-promise .wrap{padding-block:var(--space-4)}
+.fp-row{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(.6rem,2.4vw,2rem)}
+.fp-row li{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  font-size:clamp(.72rem,1.3vw,.85rem);color:var(--ink-soft);display:flex;align-items:center}
+.fp-row li:not(:last-child)::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:clamp(.6rem,2.4vw,2rem)}
+
+/* === TRUST BAR (gated): jasne pasmo, cyfry INK (NIE bursztyn=2.0 FAIL), bursztyn jako kreska pod liczbą === */
+.trust-bar{background:var(--paper);border-bottom:var(--hairline)}
+.trust-bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1rem,3vw,2.6rem);padding-block:var(--space-7)}
+.tb-stats{display:flex;flex-wrap:wrap;gap:clamp(1rem,3vw,2.6rem)}
+.tb-stat{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:var(--space-2);border-bottom:3px solid var(--accent)}
+.tb-num{font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,3vw,2.8rem);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tb-lab{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:.3rem}
+.tb-google{font-weight:700;color:var(--ink);font-size:var(--text-base);background:var(--paper-2);border:var(--hairline);border-radius:999px;padding:.5rem 1.1rem;font-variant-numeric:tabular-nums}
+.tb-seal{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;
+  color:var(--ink);border:1px solid var(--accent);border-radius:var(--r-sm);padding:.5rem 1rem}
+
+/* === LISTA USŁUG (zamiast bram-nastrojowych): konkret "co + zakres + wycena" === */
+.fach-uslugi .fu-list{list-style:none;margin:var(--space-8) 0 0;padding:0;display:flex;flex-direction:column}
+.fu-row{display:grid;grid-template-columns:minmax(11rem,1fr) 2fr auto;gap:clamp(1rem,3vw,2.5rem);align-items:center;
+  padding-block:var(--space-5);border-top:1px solid var(--line)}
+.fu-row:last-child{border-bottom:1px solid var(--line)}
+.fu-name{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--ink)}
+.fu-desc{color:var(--muted);font-size:var(--text-sm);line-height:1.55}
+.fu-cta{font-weight:700;font-size:var(--text-sm);color:var(--accent-d);white-space:nowrap}
+.fu-cta:hover{color:var(--ink)}
+@media(max-width:760px){.fu-row{grid-template-columns:1fr;gap:var(--space-2)}.fu-cta{justify-self:start}}
+
+/* === OPINIE (gated): realne cytaty z reconu === */
+.opinie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:var(--space-6);margin-top:var(--space-8)}
+.op-card{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3)}
+.op-star{color:var(--accent-d);letter-spacing:.1em;font-size:.95rem}
+.op-card blockquote{margin:0;color:var(--ink-soft);font-size:var(--text-base);line-height:1.6}
+.op-autor{font-family:var(--font-display);font-weight:700;color:var(--ink);font-size:.95rem}
+
+/* === SUWAK PRZED/PO (kopia z auto.css - CSS nie dziedziczy się między rodzinami; krytyka 5b) === */
+.auto-ba .ba-slider{position:relative;--ba-pos:50%;max-width:62rem;margin:var(--space-8) auto 0;aspect-ratio:16/9;
+  overflow:hidden;border-radius:var(--r-sm);border:1px solid var(--line);touch-action:none;user-select:none;cursor:ew-resize}
+.ba-slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ba-before-wrap{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--ba-pos)) 0 0)}
+.ba-lab{position:absolute;top:var(--space-4);z-index:3;font-family:var(--font-display);text-transform:uppercase;
+  letter-spacing:.1em;font-size:.7rem;color:#fff;background:rgba(10,12,15,.6);padding:.3rem .6rem;border-radius:2px}
+.ba-lab-l{left:var(--space-4)}
+.ba-lab-r{right:var(--space-4)}
+.ba-handle{position:absolute;top:0;bottom:0;left:var(--ba-pos);width:2px;background:var(--accent);transform:translateX(-1px);z-index:4;pointer-events:none}
+.ba-handle span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;
+  background:var(--accent);box-shadow:0 2px 12px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
+.ba-handle span::before,.ba-handle span::after{content:"";position:absolute;width:0;height:0;border-block:5px solid transparent}
+.ba-handle span::before{left:9px;border-right:6px solid #14171c}
+.ba-handle span::after{right:9px;border-left:6px solid #14171c}
+.ba-podpis{text-align:center;color:var(--muted);font-size:var(--text-sm);margin-top:var(--space-5)}
+
+/* === NAV NOBU (silnik): fachowcy === */
+.nav{position:fixed;left:0;right:0;backdrop-filter:none;border-bottom:1px solid transparent;z-index:100;transition:transform .35s var(--ease),background .35s ease,box-shadow .35s ease}
+.nav.nav-hidden{transform:translateY(-100%)}
+.nav.is-stuck{background:transparent;box-shadow:none;border-bottom-color:transparent}
+.nav.is-stuck .nav-inner{height:64px}
+.nav .brand{flex-direction:row;align-items:baseline;gap:.6rem;line-height:1}
+.nav .brand .name{font-family:var(--font-display);font-weight:600;font-size:1.5rem;text-transform:uppercase;letter-spacing:.14em}
+.nav .brand .sub{margin-top:0;padding-left:.65rem;border-left:1px solid currentColor;font-size:.66rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+.nav .nav-links a{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding-block:6px}
+.nav .nav-links a::after{height:1px}
+.nav .nav-links a.btn-accent{font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:.5rem 1.1rem;border-radius:4px;box-shadow:none}
+.nav .nav-links a.btn-accent:hover{transform:none;box-shadow:none}
+.nav .nav-links a.btn-accent{background:var(--accent);border:1px solid var(--accent);color:#14171c}
+.nav .nav-links a.btn-accent:hover{background:var(--accent);border-color:var(--accent);color:#14171c;filter:brightness(1.07)}
+.nav{background:transparent}
+.nav::after{content:"";position:absolute;left:0;right:0;top:0;height:150px;z-index:-1;pointer-events:none;transition:opacity .35s ease;background:linear-gradient(180deg,rgba(8,6,4,.55) 0%,rgba(8,6,4,0) 100%)}
+.nav.nav-solid::after{opacity:0}
+.nav .brand .name{color:#f5f1ea}
+.nav .brand .sub{color:rgba(245,241,234,.82)}
+.nav .nav-links a:not(.btn-accent){color:rgba(245,241,234,.9)}
+.nav .nav-links a:not(.btn-accent):hover,.nav .nav-links a.active:not(.btn-accent){color:#fff}
+.nav .nav-links a:not(.btn-accent)::after{background:#fff}
+.nav .nav-toggle span{background:#f5f1ea}
+.nav.nav-solid{background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:saturate(140%) blur(10px);border-bottom:var(--hairline)}
+.nav.nav-solid .brand .name{color:var(--ink)}
+.nav.nav-solid .brand .sub{color:var(--accent-d)}
+.nav.nav-solid .nav-links a:not(.btn-accent){color:var(--ink-soft)}
+.nav.nav-solid .nav-links a:not(.btn-accent):hover,.nav.nav-solid .nav-links a.active:not(.btn-accent){color:var(--ink)}
+.nav.nav-solid .nav-links a:not(.btn-accent)::after{background:var(--accent-d)}
+.nav.nav-solid .nav-toggle span{background:var(--ink)}
+.nav.nav-solid.nav-hidden{background:transparent;box-shadow:none;border-bottom-color:transparent}
+@media(min-width:681px){
+.nav .nav-inner{position:relative;height:64px}
+.nav .nav-links{flex:1;justify-content:center;gap:clamp(1rem,2.2vw,1.9rem);padding-right:12rem}
+.nav .nav-links a.btn-accent{position:absolute;right:0;top:50%;transform:translateY(-50%);margin:0}
+.nav:not(.nav-solid) .nav-links a.btn-accent{background:transparent;border-color:rgba(245,241,234,.55);color:#f5f1ea}
+.nav:not(.nav-solid) .nav-links a.btn-accent:hover{background:var(--accent);border-color:var(--accent);color:#14171c;transform:translateY(-50%)}
+}
+@media(max-width:680px){
+.nav .nav-links:not(.open){transform:translateY(-160%);visibility:hidden}
+.nav .nav-links.open{visibility:visible}
+.nav .brand .name{font-size:1.12rem;letter-spacing:.1em}
+.nav .brand .sub{display:none}
+.nav .brand{min-width:0;overflow:hidden}
+.nav .nav-links{background:var(--paper)}
+.nav .nav-links a:not(.btn-accent){color:var(--ink-soft)}
+.nav .nav-links a:not(.btn-accent):hover,.nav .nav-links a.active:not(.btn-accent){color:var(--ink)}
+}
+
+/* === focal-point zdjęć (smartcrop) — cover nie utnie twarzy/obiektu === */
+img[src$="/g1.jpg"]{object-position:62% 50%}
+[style*="g1.jpg"]{background-position:62% 50%}
+img[src$="/g2.jpg"]{object-position:67% 50%}
+[style*="g2.jpg"]{background-position:67% 50%}
+img[src$="/g3.jpg"]{object-position:38% 50%}
+[style*="g3.jpg"]{background-position:38% 50%}
+img[src$="/g4.jpg"]{object-position:67% 50%}
+[style*="g4.jpg"]{background-position:67% 50%}
+img[src$="/g5.jpg"]{object-position:72% 50%}
+[style*="g5.jpg"]{background-position:72% 50%}
+img[src$="/g6.jpg"]{object-position:67% 49%}
+[style*="g6.jpg"]{background-position:67% 49%}
+img[src$="/g7.jpg"]{object-position:67% 50%}
+[style*="g7.jpg"]{background-position:67% 50%}
+img[src$="/g8.jpg"]{object-position:67% 50%}
+[style*="g8.jpg"]{background-position:67% 50%}
+img[src$="/g9.jpg"]{object-position:62% 50%}
+[style*="g9.jpg"]{background-position:62% 50%}
+img[src$="/g10.jpg"]{object-position:62% 50%}
+[style*="g10.jpg"]{background-position:62% 50%}
+img[src$="/g11.jpg"]{object-position:58% 49%}
+[style*="g11.jpg"]{background-position:58% 49%}
+img[src$="/g14.jpg"]{object-position:38% 50%}
+[style*="g14.jpg"]{background-position:38% 50%}
